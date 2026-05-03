@@ -4,11 +4,11 @@ export const ColorDropdown = ({ currentColor, setCurrentColor }) => {
   const dropdownRef = useRef()
   const [open, setOpen] = useState(false)
   const colors = [
+    'var(--theme-blue)',
     'var(--theme-lavender)',
     'var(--theme-pink)',
     'var(--theme-yellow)',
     'var(--theme-green)',
-    'var(--theme-blue)',
   ]
 
   const handleToggle = () => {

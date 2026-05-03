@@ -8,6 +8,7 @@ export const projectsList = [
       'Responsive personal portfolio built with React, Tailwind CSS, and Vite.',
     url: 'https://xiarxos.gr',
     source: 'https://github.com/alex-xiarchos/xiarxos.gr_react',
+    writeup: '/projects/xiarxos-gr',
     urlLabel: 'Live Site',
     highlight: true,
   },
@@ -18,6 +19,7 @@ export const projectsList = [
     tagline:
       'Data mining system for classifying and clustering wearable sensor activity data.',
     source: 'https://github.com/alex-xiarchos/ceid-DataMining',
+    writeup: '/projects/human-activity-classification-clustering-system',
     url: '/reports/Project_DataMining_Report.pdf',
     urlLabel: 'Report',
     highlight: true,
@@ -29,6 +31,7 @@ export const projectsList = [
     tagline:
       'Information retrieval system with TF-IDF ranking, inverted indexing, and ColBERT.',
     source: 'https://github.com/alex-xiarchos/ceid-InfoRetrival',
+    writeup: '/projects/semantic-document-search-tfidf-colbert',
     url: '/reports/Project_InfoRetrieval_Report.pdf',
     urlLabel: 'Report',
     highlight: true,
@@ -40,6 +43,7 @@ export const projectsList = [
     tagline:
       'Range Tree, K-D Tree, R-Tree, Quad Tree, and LSH search over structured data.',
     source: 'https://github.com/alex-xiarchos/ceid-MultidimensionalDataStructures',
+    writeup: '/projects/multi-dimensional-data-indexing-search-system',
     url: '/reports/Project_MultiDimStructures_Report.pdf',
     urlLabel: 'Report',
     highlight: true,
@@ -51,6 +55,7 @@ export const projectsList = [
       'Cloud-deployed task management app built with Mendix, domain models, microflows, Kanban, and calendar views.',
     source: 'https://unitask-sandbox.mxapps.io/login.html',
     sourceLabel: 'App',
+    writeup: '/projects/task-management-app-mendix',
     url: '/reports/Project_Mendix.pdf',
     urlLabel: 'Report',
     highlight: true,
@@ -62,6 +67,7 @@ export const projectsList = [
     tagline:
       'Web platform for citizens and rescuers to coordinate essential item requests, offers, pickups, and deliveries.',
     source: 'https://github.com/alex-xiarchos/ceid-Web/',
+    writeup: '/projects/disaster-management-web-platform',
     url: '/reports/Project_WebDev_Report.pdf',
     urlLabel: 'Report',
     highlight: true,

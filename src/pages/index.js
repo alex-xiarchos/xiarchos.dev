@@ -95,26 +95,11 @@ export default function Index() {
                 return (
                   <div className="card" key={`hightlight-${project.slug}`}>
                     <time>{project.date}</time>
-                    <a
-                      href={
-                        project.source ||
-                        `https://github.com/alex-xiarchos/${project.slug}`
-                      }
-                      target="_blank"
-                      rel="noreferrer"
-                    >
+                    <Link to={project.writeup || '/projects'}>
                       {project.name}
-                    </a>
+                    </Link>
                     <p>{project.tagline}</p>
                     <div className="card-links">
-                      {project.writeup && (
-                        <Link
-                          className="button secondary small"
-                          to={project.writeup}
-                        >
-                          Article
-                        </Link>
-                      )}
                       <a
                         className="button secondary small"
                         href={project.url}
