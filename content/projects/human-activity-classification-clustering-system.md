@@ -7,22 +7,11 @@ description: Project writeup for Human Activity Classification & Clustering Syst
 comments_off: true
 ---
 
-**# ΕΞΟΡΥΞΗ ΔΕΔΟΜΕΝΩΝ ΚΑΙ ΑΛΓΟΡΙΘΜΟΙ ΜΑΘΗΣΗΣ
+The dataset includes 22 `.csv` files corresponding to 22 participants. According to the dataset [description](https://archive.ics.uci.edu/dataset/779/harth),
+it includes the `timestamp` column with the date and time, the `back_{x,y,z}` and `thigh_{x,y,z}` columns
+with each sensor value for each dimension, and the `label` column, which identifies the participant's activity at that moment.
 
-**ΠΑΝΕΠΙΣΤΗΜΙΟ ΠΑΤΡΩΝ · ΤΜΗΜΑ ΜΗΧΑΝΙΚΩΝ Η/Υ ΚΑΙ ΠΛΗΡΟΦΟΡΙΚΗΣ**  
-**ΕΡΓΑΣΤΗΡΙΑΚΗ ΑΣΚΗΣΗ · 2023-2024**
-
-**Αλέξανδρος Ξιάρχος**  
-**ΑΜ:** 1059619  
-**Email:** st1059619@ceid.upatras.gr
-
-# ΕΡΩΤΗΜΑ 1
-
-Το σύνολο δεδομένων περιλαμβάνει 22 `.csv` αρχεία που αντιστοιχούν σε 22 συμμετέχοντες. Σύμφωνα με την [περιγραφή](https://archive.ics.uci.edu/dataset/779/harth) του dataset,
-περιλαμβάνεται η στήλη `timestamp`, με την ημερομηνία και ώρα, οι στήλες `back_{x,y,z}` και `thigh_{x,y,z}`
-με τις τιμές του κάθε αισθητήρα για κάθε διάσταση, και η στήλη `label`, η οποία προσδιορίζει τη δραστηριότητα του συμμετέχοντα τη δεδομένη στιγμή.
-
-Η στήλη `label` παίρνει τις εξής τιμές:
+The `label` column takes the following values:
 
 - 1 - Walking
 - 2 - Running
@@ -36,14 +25,14 @@ comments_off: true
 - 130 - Cycling (sit, inactive)
 - 140 - Cycling (stand, inactive)
 
-Για την εισαγωγή και την προεπεξεργασία των αρχείων, θα χρησιμοποιήσουμε τη βιβλιοθήκη `pandas`
-ενώ για την οπτικοποίηση τις βιβλιοθήκες `matplotlib` και `seaborn` της Python.
+For importing and preprocessing the files, we will use the `pandas` library,
+while for visualization we will use Python's `matplotlib` and `seaborn` libraries.
 
-## ΑΝΑΛΥΣΗ ΣΥΝΟΛΟΥ ΔΕΔΟΜΕΝΩΝ
+## DATASET ANALYSIS
 
-Εισάγουμε τα `.csv` αρχεία μέσω της `os` βιβλιοθήκης και της `read_csv()` συνάρτησης.
-Καταρχάς, χρησιμοποιώντας τη `head()` μπορούμε να δούμε τις πρώτες εγγραφές του dataset μας.
-Για παράδειγμα για το πρώτο αρχείο του συνόλου δεδομένων `S006.csv`:
+We import the `.csv` files using the `os` library and the `read_csv()` function.
+First, by using `head()`, we can view the first records of our dataset.
+For example, for the first file of the dataset, `S006.csv`:
 
 |  | timestamp | back_x | back_y | back_z | thigh_x | thigh_y | thigh_z | label |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -53,12 +42,12 @@ comments_off: true
 | 3 | 2019-01-12 00:00:00.030 | -0.648772 | 0.016579 | -0.054284 | -1.554248 | -0.950978 | -0.221140 | 6 |
 | 4 | 2019-01-12 00:00:00.040 | -0.355071 | -0.051831 | -0.113419 | -0.547471 | 0.140903 | -0.653782 | 6 |
 
-Μέσω της `info()` εξάγουμε το συμπέρασμα πώς για κάθε χρονική στιγμή δίνονται οι τιμές των αισθητήρων, αποθηκευμένες ως `float24`,
-στις τρεις διαστάσεις (x, y, z) για τις περιοχές της πλάτης και του μηρού, καθώς και ένα `int64` για το `label`.
-Παρατηρείται η ίδια μορφολογία σε όλα τα `.csv` του συνόλου δεδομένων, με κάποιες διαφοροποιήσεις που θα αναλυθούν στη συνέχεια.
+Using `info()`, we conclude that for each point in time the sensor values are provided, stored as `float24`,
+in the three dimensions (x, y, z) for the back and thigh areas, as well as an `int64` for `label`.
+The same structure is observed in all `.csv` files of the dataset, with some differences that will be analyzed below.
 
-Παρόλο που στην περιγραφή αναφέρεται πως δεν υπάρχουν missing values, για να ελέγξουμε την ακεραιότητα του dataset, μέσω της συνάρτησης
-`concat()` ενώνουμε όλα τα 22 αρχεία σε ένα ενιαίο dataframe, `df_combined`. Τρέχοντας την `isnull().sum()`, έχουμε:
+Although the description states that there are no missing values, to check the integrity of the dataset we use the
+`concat()` function to merge all 22 files into a single dataframe, `df_combined`. Running `isnull().sum()`, we get:
 
 |  | sum |
 | --- | --- |
@@ -73,27 +62,27 @@ comments_off: true
 | index | 5740689 |
 | Unnamed: 0 | 6323682 |
 
-Παρατηρούμε πως στις στήλες `back_{x,y,z}` και `thigh_{x,y,z}`, οι οποίες είναι και αυτές που μας ενδιαφέρουν, όντως δεν παρατηρούνται missing values.
-Όμως, έχουν εμφανιστεί `NaN` τιμές στις στήλες `"index"` και `"Unnamed: 0"`, οι οποίες στήλες μάλλον θα εμφανίζονται επιπλέον σε κάποια αρχεία.
+We observe that in the `back_{x,y,z}` and `thigh_{x,y,z}` columns, which are the ones we are interested in, no missing values are indeed observed.
+However, `NaN` values appear in the `"index"` and `"Unnamed: 0"` columns, which probably appear as extra columns in some files.
 
-Ελέγχοντας όλα τα αρχεία, η στήλη `"index"` εμφανίζεται στα αρχεία `S015.csv` και `S021.csv` και η στήλη `"Unnamed: 0"` στο αρχείο `S023.csv`.
-Έπειτα από έλεγχο, φαίνεται πως πρόκειται για δείκτες αύξουσας αρίθμησης που δεν προσφέρουν κάποια χρήσιμη πληροφορία.
-Επομένως, μπορούμε να τις αφαιρέσουμε χρησιμοποιώντας τη συνάρτηση `drop('όνομα', axis=1)`. Τα επεξεργασμένα `.csv` αρχεία αποθηκεύονται με το επίθεμα `fix`.
+After checking all files, the `"index"` column appears in `S015.csv` and `S021.csv`, and the `"Unnamed: 0"` column appears in `S023.csv`.
+After inspection, these seem to be increasing index columns that do not provide useful information.
+Therefore, we can remove them using the `drop('name', axis=1)` function. The processed `.csv` files are saved with the `fix` suffix.
 
-Χρησιμοποιώντας τη συνάρτηση `describe()` μπορούμε να υπολογίσουμε βασικές στατιστικές μετρικές για τα δεδομένα μας.
-Η συνάρτηση επιστρέφει ένα dataframe με τις ακόλουθες στήλες:
+Using the `describe()` function, we can calculate basic statistical metrics for our data.
+The function returns a dataframe with the following columns:
 
-- `count`: ο συνολικός αριθμός των μη-μηδενικών τιμών για κάθε στήλη.
-- `mean`: ο μέσος όρος των τιμών για κάθε στήλη.
-- `min`: η ελάχιστη τιμή για κάθε στήλη.
-- `25%`: η τιμή του 25ου εκατοστημορίου για κάθε στήλη.
-- `50%`: η τιμή του 50ου εκατοστημορίου για κάθε στήλη.
-- `75%`: η τιμή του 75ου εκατοστημορίου για κάθε στήλη.
-- `max`: η μέγιστη τιμή για κάθε στήλη.
+- `count`: the total number of non-null values for each column.
+- `mean`: the average value for each column.
+- `min`: the minimum value for each column.
+- `25%`: the value of the 25th percentile for each column.
+- `50%`: the value of the 50th percentile for each column.
+- `75%`: the value of the 75th percentile for each column.
+- `max`: the maximum value for each column.
 
-Ενώνοντας συγκεντρωτικά τις μετρήσεις όλων των συμμετεχόντων στο `df_combined`,
-αυτά είναι τα **βασικά συγκεντρωτικά στατιστικά μεγέθη** όπως προκύπτουν από το `describe()`
-για όλες τις μετρήσεις από τους συμμετέχοντες, έχοντας αφαιρέσει την ετικέτα `label` μιας και αποτελείται από κατηγορικές τιμές:
+After combining all participants' measurements into `df_combined`,
+these are the **basic aggregate statistics** produced by `describe()`
+for all participant measurements, after removing the `label` attribute since it consists of categorical values:
 
 |  | back_x | back_y | back_z | thigh_x | thigh_y | thigh_z |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -106,82 +95,80 @@ comments_off: true
 | 75% | -0.812303 | 0.072510 | 0.046473 | -0.167876 | 0.154951 | 0.948675 |
 | max | 2.291708 | 6.491943 | 4.909483 | 7.999756 | 7.999756 | 8.406235 |
 
-Ως αρχικές παρατηρήσεις, βλέπουμε πως οι τιμές βρίσκονται στο διάστημα $ [-8, 8]$, ενώ η τυπική τους απόκλιση είναι μικρή,
-το οποίο δείχνει ότι οι μετρήσεις είναι αρκετά συμπυκνωμένες γύρω από τον μέσο όρο που είναι κοντά στο μηδέν.
-Προφανώς ελέγχοντας κάθε συμμετέχοντα ξεχωριστά, μπορεί να διεξαχθούν αντίστοιχα συμπεράσματα.
+As initial observations, we see that the values lie in the interval $ [-8, 8]$, while their standard deviation is small,
+which indicates that the measurements are fairly concentrated around the mean, which is close to zero.
+Obviously, by checking each participant separately, corresponding conclusions can be drawn.
 
-## ΓΡΑΦΙΚΕΣ ΠΑΡΑΣΤΑΣΕΙΣ
+## VISUALIZATIONS
 
-Μέσω της `plotbox()` της `Matplotlib`, μπορούμε να δημιουργήσουμε
-το διάγραμμα των τιμών της `df_combined` για μια πρώτη οπτικοποίηση των δεδομένων:
+Using Matplotlib's `plotbox()`, we can create
+a plot of the `df_combined` values as an initial visualization of the data:
 
-![df_combined_boxplot](df_combined_boxplot.png)
+[//]: # (![df_combined_boxplot]&#40;df_combined_boxplot.png&#41;)
 
-Πέρα από τις προηγούμενες παρατηρήσεις που επιβεβαιώνονται, επιπλέον παρατηρούμε μια συμμετρικότητα κοντά στο μηδέν
-για κάθε διάσταση. Επίσης, χρησιμοποιώντας την `displot()`, μπορούμε να οπτικοποιήσουμε την κατανομή των τιμών.
-Ενδεικτικά για τον `S009`:
+In addition to confirming the previous observations, we also observe symmetry near zero
+for each dimension. Also, by using `displot()`, we can visualize the distribution of the values.
+Indicatively, for `S009`:
 
-![S009_back_distribution](img/S009_back_distribution.png)
-![S009_thigh_distribution](img/S009_thigh_distribution.png)
+[//]: # (![S009_back_distribution]&#40;img/S009_back_distribution.png&#41;)
+[//]: # (![S009_thigh_distribution]&#40;img/S009_thigh_distribution.png&#41;)
 
-Χρησιμοποιώντας την `plot()`, μπορούμε να δημιουργήσουμε subplots για τις στήλες `back_{x,y,z}`
-και `thigh_{x,y,z}`. Αυτά, για παράδειγμα, είναι τα subplots για τον συμμετέχοντα `S015`:
+Using `plot()`, we can create subplots for the `back_{x,y,z}`
+and `thigh_{x,y,z}` columns. These, for example, are the subplots for participant `S015`:
 
-![S015_back](img/waveforms/S015_back.png)
-![S015_thigh](img/waveforms/S015_thigh.png)
+[//]: # (![S015_back]&#40;img/waveforms/S015_back.png&#41;)
+[//]: # (![S015_thigh]&#40;img/waveforms/S015_thigh.png&#41;)
 
-Φαίνεται ότι ο συμμετέχοντας κατά τη διάρκεια της μέτρησης μεταβάλλει τη φυσική του δραστηριότητα (μάλιστα με παρόμοιο τρόπο σε πλάτη και μηρό),
-καθώς υπάρχουν στιγμές που δεν υπάρχουν έντονες διακυμάνσεις των τιμών των μετρήσεων των αισθητήρων και άλλες όπου είναι πιο ενεργός,
-με την τιμή του `label` να αλλάζει και αυτή. Στις στιγμές που ο συμμετέχοντας δεν κινείται, το `label`
-φαίνεται να παίρνει την τιμή `8 - Standing`, που επιβεβαιώνει τη στασιμότητά του.
+It appears that during the measurement the participant changes physical activity (in fact, in a similar way for the back and thigh),
+as there are moments when there are no strong fluctuations in the sensor measurement values and others when the participant is more active,
+with the `label` value also changing. At the moments when the participant is not moving, `label`
+appears to take the value `8 - Standing`, which confirms the lack of movement.
 
-Από την άλλη, στον συμμετέχοντα `S029` παρατηρούμε πως η κίνηση της πλάτης δεν ταυτίζεται με την (έντονη) κίνηση των μηρών,
-κάτι που μας οδηγεί στο συμπέρασμα πως ο συμμετέχοντας κάνει ποδήλατο.
-Το γεγονός αυτό επιβεβαιώνεται και από τα spikes του `label` στις τιμές 100.
+On the other hand, for participant `S029` we observe that the movement of the back does not match the (intense) movement of the thighs,
+which leads us to the conclusion that the participant is cycling.
+This is also confirmed by the spikes of `label` at values around 100.
 
-![S029_back](img/waveforms/S029_back.png)
-![S029_thigh](img/waveforms/S029_thigh.png)
+[//]: # (![S029_back]&#40;img/waveforms/S029_back.png&#41;)
+[//]: # (![S029_thigh]&#40;img/waveforms/S029_thigh.png&#41;)
 
-Τέλος, για τον συμμετέχοντα `S027`, φαίνεται να έχει μια πολύ έντονη φυσική δραστηριότητα με τη `label`
-να παραμένει σταθερή με τιμή κοντά στο 2.5, κάτι από το οποίο μπορούμε να συμπεράνουμε πως ο συμμετέχοντας τρέχει:
+Finally, participant `S027` appears to have very intense physical activity, with `label`
+remaining stable at a value close to 2.5, from which we can infer that the participant is running:
 
-![S027_back](img/waveforms/S027_back.png)
-![S027_thigh](img/waveforms/S027_thigh.png)
+[//]: # (![S027_back]&#40;img/waveforms/S027_back.png&#41;)
+[//]: # (![S027_thigh]&#40;img/waveforms/S027_thigh.png&#41;)
 
-Τέλος, για τον εντοπισμό συσχετίσεων, μπορούμε να δημιουργήσουμε ένα `heatmap()` μέσω της `seaborn`.
-Για παράδειγμα, για τον συμμετέχοντα `S008` φαίνεται πως υπάρχει μια κάποια συσχέτιση ανάμεσα στις στήλες `back_x` + `back_z`,
-`thigh_x` + `thigh_z` και `back_z` + `thigh_x` ενώ στον `S015` ανάμεσα στις στήλες `back_x` + `back_z` και `back_y` + `thigh_y`.
+Finally, to detect correlations, we can create a `heatmap()` using `seaborn`.
+For example, for participant `S008` there appears to be some correlation between the `back_x` + `back_z`,
+`thigh_x` + `thigh_z`, and `back_z` + `thigh_x` columns, while for `S015` there is correlation between `back_x` + `back_z` and `back_y` + `thigh_y`.
 
-![S008_heatmap](img/heatmaps/S008_heatmap.png)
-![S015_heatmap](img/heatmaps/S015_heatmap.png)
+[//]: # (![S008_heatmap]&#40;img/heatmaps/S008_heatmap.png&#41;)
+[//]: # (![S015_heatmap]&#40;img/heatmaps/S015_heatmap.png&#41;)
 
-Δημιουργώντας heatmap και για το συγκεντρωτικό dataframe `df_combined`, παρατηρούμε μια  αμυδρή συσχέτιση
-ανάμεσα στα `thigh_x` + `back_x` και `thigh_x` + `thigh_z`.
+By also creating a heatmap for the aggregate dataframe `df_combined`, we observe a weak correlation
+between `thigh_x` + `back_x` and `thigh_x` + `thigh_z`.
 
-![df_combined_heatmap](df_combined_heatmap.png)
+[//]: # (![df_combined_heatmap]&#40;df_combined_heatmap.png&#41;)
 
-Στο παράρτημα παρατίθενται τα plots και τα heatmaps για όλους τους συμμετέχοντες.
+The appendix includes the plots and heatmaps for all participants.
 
-# ΕΡΩΤΗΜΑ 2
+## CLASSIFIER DEFINITION
 
-## ΟΡΙΣΜΟΣ ΤΑΞΙΝΟΜΗΤΩΝ
+In the `get_classifier(option)` function, the classifiers that will be used later are defined and can be selected.
 
-Στην συνάρτηση `get_classifier(option)` ορίζονται και μπορούν να επιλεχθούν οι ταξινομητές που θα χρησιμοποιηθούν στη συνέχεια.
+For each classifier case, in each of the 22 dataframes of the dataset, the `timestamp` column is removed,
+and the dataframe is separated from the `label` column into `X` and `Y`. After this separation, the dataframes
+`X_train`, `X_test`, `Y_train`, and `Y_test` are split with `test_size = 0.3`.
 
-Σε κάθε περίπτωση ταξινομητή, σε καθένα από τα 22 dataframes του dataset αφαιρείται η στήλη `timestamp`,
-και το dataframe διαχωρίζεται από τη στήλη `label` στα `X` και `Y`. Όταν γίνει ο διαχωρισμός, γίνονται split
-στα dataframes `X_train`, `X_test`, `Y_train`, `Y_test` με `test_size = 0.3`.
+The `MLPClassifier` runs with `max_iter=500`, and the `RandomForestClassifier` with `n_estimators=100, criterion='entropy'`.
 
-Ο `MLPClassifier` τρέχει με `max_iter=500`, και ο `RandomForestClassifier` με `n_estimators=100, criterion='entropy'`.
+After the classifier is selected, it is trained using `fit(X_train, Y_train)`, and its predictions are stored using `predict(X_test)`.
 
-Αφού γίνει η επιλογή του classifier, αυτός γίνεται train μέσω της `fit(X_train, Y_train)` και αποθηκεύονται τα predictions του μέσω της `predict(X_test)`.
+As a result, all three classifiers are executed for all files, and the `training accuracy` is stored,
+as well as the metrics from `sklearn.metrics`: `testing accuracy`, `precision`, `recall`, and `f1`.
 
-Το αποτέλεσμα είναι να εκτελούνται και οι τρεις classifiers για όλα τα αρχεία και να αποθηκεύονται το `training accuracy`
-όπως επίσης οι μετρικές μέσω της `sklearn.metrics`: `testing accuracy`, `precision`, `recall` και `f1`.
+## RESULTS
 
-## ΑΠΟΤΕΛΕΣΜΑΤΑ
-
-Τρέχουμε κάθε classifier για όλους τους συμμετέχοντες:
+We run each classifier for all participants:
 
 ### NEURAL NETWORKS
 
@@ -264,9 +251,9 @@ comments_off: true
 | S028.csv | 0.9570936829723933 | 0.9572385680267991 |
 | S029.csv | 0.7504656237759890 | 0.7464329012403246 |
 
-### ΜΕΣΟΙ ΟΡΟΙ
+### AVERAGES
 
-Μέσω της `np.mean()` υπολογίζονται οι μέσοι όροι των αποτελεσμάτων των μοντέλων:
+Using `np.mean()`, the averages of the model results are calculated:
 
 |  | classifier | score | accuracy | precision | recall | f1 |
 | --- | --- | --- | --- | --- | --- | --- |
@@ -274,118 +261,118 @@ comments_off: true
 | 2 | RandomForestClassifier | 0.9999962322 | 0.9317139313 | 0.8322693957 | 0.7073846769 | 0.7384389196 |
 | 3 | GaussianNB | 0.8403413636 | 0.8403609059 | 0.5568391564 | 0.5460153011 | 0.5208372416 |
 
-![models_train_test](img/models_train_test.png)
-![models_metrics](img/models_metrics.png)
+[//]: # (![models_train_test]&#40;img/models_train_test.png&#41;)
+[//]: # (![models_metrics]&#40;img/models_metrics.png&#41;)
 
-## ΣΥΜΠΕΡΑΣΜΑΤΑ
+## CONCLUSIONS
 
-Παρατηρούμε πως το training accuracy του Random Forest είναι σχεδόν τέλειο, και μεγαλύτερο από το testing accuracy.
-Αυτό μας οδηγεί στο συμπέρασμα πως είναι πιθανό να υπάρχει overfitting· υπάρχει υπερβολικά καλή απόδοση στα training δεδομένα και δεν γενικεύει αρκετά ώστε να ανταποκρίνεται στα test δεδομένα.
-Σε συνδυασμό με την μικρότερη ακρίβεια των Bayesian Networks, η καλύτερη δυνατή επιλογή είναι τα Neural Networks.
+We observe that the training accuracy of Random Forest is almost perfect and higher than the testing accuracy.
+This leads us to conclude that overfitting is likely: performance on the training data is excessively good, and the model does not generalize enough to perform as well on the test data.
+Combined with the lower accuracy of the Bayesian Networks, the best possible choice is Neural Networks.
 
-# ΕΡΩΤΗΜΑ 3
+# QUESTION 3
 
-Για αρχή, θα χρησιμοποιήσουμε τον KMeans αλγόριθμο της `sklearn.cluster` για τη συσταδοποίηση.
-Καταρχάς περνάμε τα δεδομένα μέσα από έναν scaler, συγκεκριμένα τον `StandardScaler()`, ο οποίος τα κανονικοποιεί για να είναι ομοιόμορφα.
-Η διαδικασία αυτή είναι απαραίτητη, μιας και ο αλγόριθμος είναι επιρρεπής στις μικροαλλαγές των δεδομένων, και χρειάζεται η συστηματοποίησή τους.
+To begin, we will use the KMeans algorithm from `sklearn.cluster` for clustering.
+First, we pass the data through a scaler, specifically `StandardScaler()`, which normalizes them so they are uniform.
+This process is necessary because the algorithm is sensitive to small changes in the data and requires standardization.
 
-Μιας και έχουμε πολυδιάστατα δεδομένα, είναι απαραίτητη η μείωση των διαστάσεων, ώστε να είναι εφικτό να απεικονιστούν στο δισδιάστατο επίπεδο.
-Για αυτό το λόγο χρησιμοποιούμε τον PCA της `sklearn.decomposition`. Εν τέλει, ο KMeans αλγόριθμος δημιουργεί τις επόμενες 5 συστάδες:
+Since we have multidimensional data, dimensionality reduction is necessary so that the data can be visualized in two dimensions.
+For this reason, we use PCA from `sklearn.decomposition`. Ultimately, the KMeans algorithm creates the following 5 clusters:
 
-![Kmeans_clustering](img/Kmeans_clustering.png)
+[//]: # (![Kmeans_clustering]&#40;img/Kmeans_clustering.png&#41;)
 
-Ένας εναλλακτικός τρόπος για τη συσταδοποίηση είναι να χρησιμοποιήσουμε τον DBSCAN αλγόριθμο πάλι της `sklearn.cluster`.
-Ο DBSCAN δημιουργεί συστάδες οποιουδήποτε σχήματος, ενώ δεν επηρεάζεται τόσο από τα outliers.
-Δεν προκαθορίζεται ο αριθμός των συστάδων· καθορίζεται ένας `eps` αριθμός που ρυθμίζει τη μέγιστη απόσταση δύο δειγμάτων που ανήκουν στην ίδια συστάδα.
-Είναι υπολογιστικά πιο αργός, αλλά λέγεται πως επιφέρει καλύτερα αποτελέσματα.
+An alternative method for clustering is to use the DBSCAN algorithm, also from `sklearn.cluster`.
+DBSCAN creates clusters of any shape and is less affected by outliers.
+The number of clusters is not predefined; instead, an `eps` value is set, which controls the maximum distance between two samples that belong to the same cluster.
+It is computationally slower, but it is said to produce better results.
 
-![DBSCAN_clustering](img/DBSCAN_clustering.png)
+[//]: # (![DBSCAN_clustering]&#40;img/DBSCAN_clustering.png&#41;)
 
-Λόγω του πολύ μεγάλου συνόλου δεδομένων και του μεγάλου χρόνου υπολογισμού του, ο αλγόριθμος εκτελέστηκε μόνο σε ένα `.csv` αρχείο αντί για το `df_combined`.
+Due to the very large dataset and the long computation time, the algorithm was executed only on one `.csv` file instead of `df_combined`.
 
-## ΣΥΜΠΕΡΑΣΜΑΤΑ
+## CONCLUSIONS
 
-Αν και ο αλγόριθμος παραμετροποιήθηκε αρκετά και δοκιμάστηκαν διαφορετικές τιμές του `eps`, πέρα από την πολύ αρχή εκτέλεσή του,
-δε δημιούργησε ξεκάθαρες πλειάδες, παρόλο που εκτελέστηκε σε ένα πολύ μικρότερο σύνολο σε σύγκριση με τον KMeans. Σε αυτό ίσως ευθύνονται οι πολλαπλές διαστάσεις των δεδομένων (curse of dimensionality).
-Αντίθετα ο KMeans δημιούργησε άμεσα ξεκάθαρες πλειάδες σε πολύ σύντομο χρονικό διάστημα σε ένα μεγάλο πλήθος δεδομένων.
+Although the algorithm was tuned considerably and different `eps` values were tested, apart from the very beginning of its execution,
+it did not create clear clusters, even though it was run on a much smaller set compared with KMeans. The multiple dimensions of the data may be responsible for this (curse of dimensionality).
+By contrast, KMeans immediately created clear clusters in a very short time on a large number of data points.
 
-Εν τέλει, λόγω της μορφολογίας του συγκεκριμένου συνόλου δεδομένων, που δεν περιλαμβάνει θόρυβο ή πολλά outliers, ο KMeans ανταποκρίνεται καλύτερα.
+Ultimately, due to the structure of this specific dataset, which does not include noise or many outliers, KMeans performs better.
 
-# ΠΑΡΑΡΤΗΜΑ
+[//]: # (## APPENDIX)
 
-## PLOTS
+[//]: # (## PLOTS)
 
-![S006_back](img/waveforms/S006_back.png)
-![S006_thigh](img/waveforms/S006_thigh.png)
+[//]: # (![S006_back]&#40;img/waveforms/S006_back.png&#41;)
+[//]: # (![S006_thigh]&#40;img/waveforms/S006_thigh.png&#41;)
 
-![S008_back](img/waveforms/S008_back.png)
-![S008_thigh](img/waveforms/S008_thigh.png)
+[//]: # (![S008_back]&#40;img/waveforms/S008_back.png&#41;)
+[//]: # (![S008_thigh]&#40;img/waveforms/S008_thigh.png&#41;)
 
-![S009_back](img/waveforms/S009_back.png)
-![S009_thigh](img/waveforms/S009_thigh.png)
+[//]: # (![S009_back]&#40;img/waveforms/S009_back.png&#41;)
+[//]: # (![S009_thigh]&#40;img/waveforms/S009_thigh.png&#41;)
 
-![S010_back](img/waveforms/S010_back.png)
-![S010_thigh](img/waveforms/S010_thigh.png)
+[//]: # (![S010_back]&#40;img/waveforms/S010_back.png&#41;)
+[//]: # (![S010_thigh]&#40;img/waveforms/S010_thigh.png&#41;)
 
-![S012_back](img/waveforms/S012_back.png)
-![S012_thigh](img/waveforms/S012_thigh.png)
+[//]: # (![S012_back]&#40;img/waveforms/S012_back.png&#41;)
+[//]: # (![S012_thigh]&#40;img/waveforms/S012_thigh.png&#41;)
 
-![S013_back](img/waveforms/S013_back.png)
-![S013_thigh](img/waveforms/S013_thigh.png)
+[//]: # (![S013_back]&#40;img/waveforms/S013_back.png&#41;)
+[//]: # (![S013_thigh]&#40;img/waveforms/S013_thigh.png&#41;)
 
-![S014_back](img/waveforms/S014_back.png)
-![S014_thigh](img/waveforms/S014_thigh.png)
+[//]: # (![S014_back]&#40;img/waveforms/S014_back.png&#41;)
+[//]: # (![S014_thigh]&#40;img/waveforms/S014_thigh.png&#41;)
 
-![S015_back](img/waveforms/S015_back.png)
-![S015_thigh](img/waveforms/S015_thigh.png)
+[//]: # (![S015_back]&#40;img/waveforms/S015_back.png&#41;)
+[//]: # (![S015_thigh]&#40;img/waveforms/S015_thigh.png&#41;)
 
-![S016_back](img/waveforms/S016_back.png)
-![S016_thigh](img/waveforms/S016_thigh.png)
+[//]: # (![S016_back]&#40;img/waveforms/S016_back.png&#41;)
+[//]: # (![S016_thigh]&#40;img/waveforms/S016_thigh.png&#41;)
 
-![S017_back](img/waveforms/S017_back.png)
-![S017_thigh](img/waveforms/S017_thigh.png)
+[//]: # (![S017_back]&#40;img/waveforms/S017_back.png&#41;)
+[//]: # (![S017_thigh]&#40;img/waveforms/S017_thigh.png&#41;)
 
-![S018_back](img/waveforms/S018_back.png)
-![S018_thigh](img/waveforms/S018_thigh.png)
+[//]: # (![S018_back]&#40;img/waveforms/S018_back.png&#41;)
+[//]: # (![S018_thigh]&#40;img/waveforms/S018_thigh.png&#41;)
 
-![S019_back](img/waveforms/S019_back.png)
-![S019_thigh](img/waveforms/S019_thigh.png)
+[//]: # (![S019_back]&#40;img/waveforms/S019_back.png&#41;)
+[//]: # (![S019_thigh]&#40;img/waveforms/S019_thigh.png&#41;)
 
-![S020_back](img/waveforms/S020_back.png)
-![S020_thigh](img/waveforms/S020_thigh.png)
+[//]: # (![S020_back]&#40;img/waveforms/S020_back.png&#41;)
+[//]: # (![S020_thigh]&#40;img/waveforms/S020_thigh.png&#41;)
 
-![S021_back](img/waveforms/S021_back.png)
-![S021_thigh](img/waveforms/S021_thigh.png)
+[//]: # (![S021_back]&#40;img/waveforms/S021_back.png&#41;)
+[//]: # (![S021_thigh]&#40;img/waveforms/S021_thigh.png&#41;)
 
-![S022_back](img/waveforms/S022_back.png)
-![S022_thigh](img/waveforms/S022_thigh.png)
+[//]: # (![S022_back]&#40;img/waveforms/S022_back.png&#41;)
+[//]: # (![S022_thigh]&#40;img/waveforms/S022_thigh.png&#41;)
 
-## HEATMAPS
+[//]: # (## HEATMAPS)
 
-![S006_heatmap](img/heatmaps/S006_heatmap.png)
-![S008_heatmap](img/heatmaps/S008_heatmap.png)
-![S009_heatmap](img/heatmaps/S009_heatmap.png)
-![S010_heatmap](img/heatmaps/S010_heatmap.png)
-![S012_heatmap](img/heatmaps/S012_heatmap.png)
-![S013_heatmap](img/heatmaps/S013_heatmap.png)
-![S014_heatmap](img/heatmaps/S014_heatmap.png)
-![S015_heatmap](img/heatmaps/S015_heatmap.png)
-![S016_heatmap](img/heatmaps/S016_heatmap.png)
-![S017_heatmap](img/heatmaps/S017_heatmap.png)
-![S018_heatmap](img/heatmaps/S018_heatmap.png)
-![S019_heatmap](img/heatmaps/S019_heatmap.png)
-![S020_heatmap](img/heatmaps/S020_heatmap.png)
-![S021_heatmap](img/heatmaps/S021_heatmap.png)
-![S022_heatmap](img/heatmaps/S022_heatmap.png)
-![S023_heatmap](img/heatmaps/S023_heatmap.png)
-![S024_heatmap](img/heatmaps/S024_heatmap.png)
-![S025_heatmap](img/heatmaps/S025_heatmap.png)
-![S026_heatmap](img/heatmaps/S026_heatmap.png)
-![S027_heatmap](img/heatmaps/S027_heatmap.png)
-![S028_heatmap](img/heatmaps/S028_heatmap.png)
-![S029_heatmap](img/heatmaps/S029_heatmap.png)
+[//]: # (![S006_heatmap]&#40;img/heatmaps/S006_heatmap.png&#41;)
+[//]: # (![S008_heatmap]&#40;img/heatmaps/S008_heatmap.png&#41;)
+[//]: # (![S009_heatmap]&#40;img/heatmaps/S009_heatmap.png&#41;)
+[//]: # (![S010_heatmap]&#40;img/heatmaps/S010_heatmap.png&#41;)
+[//]: # (![S012_heatmap]&#40;img/heatmaps/S012_heatmap.png&#41;)
+[//]: # (![S013_heatmap]&#40;img/heatmaps/S013_heatmap.png&#41;)
+[//]: # (![S014_heatmap]&#40;img/heatmaps/S014_heatmap.png&#41;)
+[//]: # (![S015_heatmap]&#40;img/heatmaps/S015_heatmap.png&#41;)
+[//]: # (![S016_heatmap]&#40;img/heatmaps/S016_heatmap.png&#41;)
+[//]: # (![S017_heatmap]&#40;img/heatmaps/S017_heatmap.png&#41;)
+[//]: # (![S018_heatmap]&#40;img/heatmaps/S018_heatmap.png&#41;)
+[//]: # (![S019_heatmap]&#40;img/heatmaps/S019_heatmap.png&#41;)
+[//]: # (![S020_heatmap]&#40;img/heatmaps/S020_heatmap.png&#41;)
+[//]: # (![S021_heatmap]&#40;img/heatmaps/S021_heatmap.png&#41;)
+[//]: # (![S022_heatmap]&#40;img/heatmaps/S022_heatmap.png&#41;)
+[//]: # (![S023_heatmap]&#40;img/heatmaps/S023_heatmap.png&#41;)
+[//]: # (![S024_heatmap]&#40;img/heatmaps/S024_heatmap.png&#41;)
+[//]: # (![S025_heatmap]&#40;img/heatmaps/S025_heatmap.png&#41;)
+[//]: # (![S026_heatmap]&#40;img/heatmaps/S026_heatmap.png&#41;)
+[//]: # (![S027_heatmap]&#40;img/heatmaps/S027_heatmap.png&#41;)
+[//]: # (![S028_heatmap]&#40;img/heatmaps/S028_heatmap.png&#41;)
+[//]: # (![S029_heatmap]&#40;img/heatmaps/S029_heatmap.png&#41;)
 
-## ΚΩΔΙΚΑΣ
+## CODE
 
 ### `data_analysis.ipynb`
 
@@ -408,18 +395,18 @@ for file in file_list:
 
 df_combined = df_combined.drop('label', axis=1)
 
-# Αφαίρεση περιττών στηλών
+# Remove unnecessary columns
 df = pd.read_csv(os.path.join('harth/', file_list[7]))
 df = df.drop('index', axis=1)
 df.to_csv('harth/S015_fix.csv', index=False)
 
-# Δημιουργία πινάκων
+# Create tables
 df = pd.read_csv(os.path.join('harth/', file_list[0]))
 df.head()
 df.info()
 df_combined.describe()
 
-# Δημιουργία γραφημάτων
+# Create plots
 for file in file_list:
     df = pd.read_csv(os.path.join('harth/', file_list[1]))
     df[['back_x','back_y', 'back_z', 'label']].plot(title= file, subplots=True)
@@ -437,7 +424,7 @@ for file in file_list:
         sns.heatmap(corr_df, annot=True, cmap='coolwarm')
         plt.title(file)
 
-        # Αποθήκευση σε αρχείο:
+        # Save to file:
         folder_path = 'Report/src/img/heatmaps'
         fig_name = file.replace(".csv","") + '_heatmap.png'
         plt.savefig(os.path.join(folder_path, fig_name))
@@ -598,4 +585,4 @@ plt.scatter(data_scaled[:, 0], data_scaled[:, 1], c=clusters, cmap='plasma', alp
 plt.title('DBSCAN Clustering')
 # plt.colorbar()
 plt.show()
-```**
+```
