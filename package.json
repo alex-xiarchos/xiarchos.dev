@@ -1,0 +1,50 @@
+{
+  "name": "xiarxos.gr",
+  "private": true,
+  "version": "7.1",
+  "packageManager": "npm@9.9.4",
+  "description": "Alexandros Xiarchos' personal website.",
+  "author": "Alexandros Xiarchos",
+  "license": "MIT",
+  "scripts": {
+    "build": "GATSBY_TELEMETRY_DISABLED=1 NODE_OPTIONS=--disable-warning=DEP0040 gatsby build",
+    "develop": "GATSBY_TELEMETRY_DISABLED=1 NODE_OPTIONS=--disable-warning=DEP0040 gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alex-xiarchos/xiarxos.gr"
+  },
+  "dependencies": {
+    "gatsby": "^5.16.1",
+    "gatsby-plugin-feed": "^5.16.0",
+    "gatsby-plugin-image": "^3.16.0",
+    "gatsby-plugin-local-search": "^2.0.1",
+    "gatsby-plugin-netlify": "^5.1.1",
+    "gatsby-plugin-postcss": "^6.16.0",
+    "gatsby-plugin-sharp": "^5.16.0",
+    "gatsby-remark-autolink-headers": "^6.16.0",
+    "gatsby-remark-images": "^7.16.0",
+    "gatsby-remark-prismjs": "^7.16.0",
+    "gatsby-remark-prismjs-copy-button": "^0.4.0",
+    "gatsby-source-filesystem": "^5.16.0",
+    "gatsby-transformer-remark": "^6.16.0",
+    "gatsby-transformer-sharp": "^5.16.0",
+    "postcss-dark-theme-class": "^2.0.0",
+    "postcss-preset-env": "^10.6.1",
+    "postcss-scrollbar": "^0.5.1",
+    "prismjs": "^1.30.0",
+    "query-string": "^9.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-social-icons": "^6.26.0",
+    "react-use-flexsearch": "^0.1.1"
+  },
+  "devDependencies": {
+    "gatsby-plugin-manifest": "^5.16.0",
+    "postcss": "^8.5.13",
+    "postcss-nesting": "^13.0.1"
+  }
+}

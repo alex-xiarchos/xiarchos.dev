@@ -1,0 +1,78 @@
+import React, { useState, useEffect } from 'react'
+
+import { Navigation } from './Navigation'
+import { Footer } from './Footer'
+import { Sidebar } from './Sidebar'
+import { AppearanceControls } from './AppearanceControls'
+
+import '../styles/style.css'
+import '../styles/new-moon.css'
+
+export const Layout = ({ data, children }) => {
+  const [theme, setTheme] = useState('dark')
+  const [currentColor, setCurrentColor] = useState('var(--theme-blue)')
+  const isNote =
+    data?.markdownRemark?.frontmatter?.categories?.includes('Personal')
+
+  const handleUpdateTheme = (newTheme) => {
+    const html = document.documentElement
+    window.localStorage.setItem('theme', newTheme)
+    document.documentElement.style.setProperty('color-scheme', newTheme)
+
+    if (newTheme === 'light') {
+      html.classList.add('is-light')
+      html.classList.remove('is-dark')
+    }
+
+    if (newTheme === 'dark') {
+      html.classList.add('is-dark')
+      html.classList.remove('is-light')
+    }
+
+    setTheme(newTheme)
+    window.dispatchEvent(
+      new CustomEvent('themechange', { detail: { theme: newTheme } })
+    )
+  }
+
+  useEffect(() => {
+    const html = document.documentElement
+    const savedTheme = window.localStorage.getItem('theme')
+
+    if (savedTheme) {
+      setTheme(savedTheme)
+      document.documentElement.style.setProperty('color-scheme', savedTheme)
+
+      if (savedTheme === 'light') {
+        html.classList.add('is-light')
+        html.classList.remove('is-dark')
+      }
+
+      if (savedTheme === 'dark') {
+        html.classList.add('is-dark')
+        html.classList.remove('is-light')
+      }
+    }
+  }, [])
+
+  return (
+    <div>
+      <div id="layout" className="layout">
+        <AppearanceControls
+          handleUpdateTheme={handleUpdateTheme}
+          theme={theme}
+          currentColor={currentColor}
+          setCurrentColor={setCurrentColor}
+        />
+        <Navigation />
+        <Sidebar />
+        <div className="main-wrapper">
+          <div className={`main-container ${isNote ? 'is-note' : ''}`}>
+            {children}
+          </div>
+          <Footer />
+        </div>
+      </div>
+    </div>
+  )
+}
