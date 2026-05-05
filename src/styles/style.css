@@ -296,7 +296,7 @@ ol,
 ul,
 blockquote,
 table {
-  -webkit-font-smoothing: auto;
+  -webkit-font-smoothing: antialiased;
 }
 
 @media screen and (min-width: 800px) {
@@ -1130,7 +1130,7 @@ a.navbar-icon {
   }
 
   &.hero-index {
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
   }
 
   &.hero-taxonomy {
@@ -1146,7 +1146,7 @@ a.navbar-icon {
 
     &.hero-index {
       margin-top: 2rem;
-      margin-bottom: 4rem;
+      margin-bottom: 2rem;
 
       h1 {
         font-size: 3rem;
@@ -1176,7 +1176,6 @@ a.navbar-icon {
     align-items: center;
     gap: 1rem;
     margin-top: 0;
-    margin-bottom: 0;
     margin-bottom: 0.5rem;
 
     .small {
@@ -1192,6 +1191,7 @@ a.navbar-icon {
 
 .section-index {
   padding-bottom: 2rem;
+  margin-top: 4rem;
   margin-bottom: 1rem;
 }
 
@@ -1244,7 +1244,7 @@ a.navbar-icon {
 
   .hero-image-container {
     position: relative;
-    margin-top: 4rem;
+    margin-top: 2rem;
     display: inline-grid;
     place-items: center;
 

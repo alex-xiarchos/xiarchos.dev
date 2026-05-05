@@ -43,7 +43,7 @@ export default function Index() {
               </p>
             </div>
             <div className="hero-image-container">
-              <img src="/ram.png" className="hero-image" alt="RAM Ram" />
+              <img src="/hero.png" className="hero-image" alt="Alexandros" />
             </div>
           </div>
         </Hero>
