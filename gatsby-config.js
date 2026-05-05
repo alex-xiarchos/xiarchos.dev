@@ -137,7 +137,6 @@ module.exports = {
             },
           },
           'gatsby-remark-autolink-headers',
-          // 'gatsby-remark-prismjs-copy-button',
           {
             resolve: 'gatsby-remark-prismjs',
             options: {

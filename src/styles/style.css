@@ -859,6 +859,24 @@ a.navbar-icon {
   }
 }
 
+.sidebar-disclaimer {
+  padding: 0.75rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-background-blockquote);
+
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+    font-size: 13px;
+    line-height: 1.45;
+  }
+}
+
+.sidebar-section.sidebar-disclaimer:last-child {
+  padding: 0.75rem;
+}
+
 .avatar {
   border-radius: var(--border-radius);
   height: 50px;
@@ -1227,16 +1245,20 @@ a.navbar-icon {
   .hero-image-container {
     position: relative;
     margin-top: 4rem;
+    display: inline-grid;
+    place-items: center;
 
     &::before {
       position: absolute;
-      top: 1rem;
-      left: 0;
+      top: 50%;
+      left: 50%;
+      transform: translate(-47%, -53%);
       content: '';
       background: var(--color-primary);
       border-radius: 50%;
       height: 200px;
       width: 200px;
+      z-index: 0;
     }
   }
 
@@ -1366,6 +1388,24 @@ a time.new-post {
 
 .main-article-thumbnail {
   margin-bottom: 1rem;
+}
+
+.work-in-progress-notice {
+  padding: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+  background: var(--color-background-blockquote);
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+  }
+
+  p {
+    margin: 0;
+    color: var(--color-text-muted);
+  }
 }
 
 /* Cards */
@@ -1656,36 +1696,9 @@ a.footer-link {
   margin-right: auto;
 }
 
-.footer-menu {
-  display: flex;
-  gap: 0.75rem;
-}
-
-.footer-menu-buttons {
-  display: flex;
-  flex-direction: row;
-  gap: 0.75rem;
-
-  a.button.small {
-    gap: 0.4rem;
-    padding-left: 0.55rem;
-    padding-right: 0.8rem;
-  }
-}
-
-.footer-button-icon {
-  height: 24px !important;
-  width: 24px !important;
-  margin-left: -0.1rem;
-}
-
 @media screen and (min-width: 800px) {
   .footer {
     font-size: 14px;
-  }
-
-  .footer-menu {
-    display: flex;
   }
 }
 
@@ -1723,31 +1736,6 @@ a.footer-link {
 
 .large-gap {
   gap: 1rem;
-}
-
-.main-article {
-  .gatsby-remark-prismjs-copy-button-container {
-    position: relative;
-
-    .gatsby-remark-prismjs-copy-button {
-      position: absolute;
-      top: 0;
-      right: 1rem;
-      border-radius: var(--border-radius);
-      border: 1px solid var(--color-border);
-      background: var(--color-background-navbar);
-      color: var(--color-text-muted);
-      line-height: 1;
-      padding: 4px 6px;
-      z-index: 99;
-
-      &:hover {
-        background: var(--color-background-navbar);
-        border: 1px solid var(--color-border-hover);
-        color: var(--color-text);
-      }
-    }
-  }
 }
 
 .highlight {

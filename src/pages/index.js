@@ -20,12 +20,12 @@ export default function Index() {
             <div>
               <h1>Hey, I'm Alexandros!</h1>
               <p className="hero-description">
-                I'm a web developer and computer engineering graduate building
-                practical web platforms, data systems, and low-code apps.
+                I'm a software developer exploring ideas, systems, and useful
+                digital work.
               </p>
               <p className="hero-description">
-                I like turning messy requirements into reliable interfaces and
-                maintainable systems.
+                This space is still taking shape, and the final version will
+                come together over time.
               </p>
               <p
                 className="flex-wrap flex-align-center gap"
@@ -37,15 +37,9 @@ export default function Index() {
                 <Link className="button" to="/experience">
                   <img src={projects} alt="Projects Logo" /> Experience
                 </Link>
-                <a
-                  href="https://github.com/alex-xiarchos"
-                  className="button"
-                  type="button"
-                  rel="noreferrer"
-                  target="_blank"
-                >
-                  <img src={github} alt="GitHub Logo" /> GitHub
-                </a>
+                <Link className="button" to="/projects">
+                  <img src={github} alt="Projects Logo" /> Projects
+                </Link>
               </p>
             </div>
             <div className="hero-image-container">

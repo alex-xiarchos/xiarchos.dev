@@ -4,6 +4,7 @@ import { Layout } from '../components/Layout'
 import { Hero } from '../components/Hero'
 import { SiteHead } from '../components/SiteHead'
 import { PageLayout } from '../components/PageLayout'
+import { WorkInProgressNotice } from '../components/WorkInProgressNotice'
 import floppy from '../assets/nav-floppy.png'
 import projects from '../assets/nav-projects.png'
 
@@ -12,11 +13,14 @@ const pageIcons = {
   '/me/': floppy,
 }
 
+const unfinishedPages = new Set(['/experience/', '/me/'])
+
 export default function PageTemplate({ pageContext }) {
   const post = pageContext.page
   const { title, description, thumbnail } = post.frontmatter
   const icon = pageIcons[post.fields.slug]
-  const heroDescription = post.fields.slug === '/me/' ? null : description
+  const isUnfinishedPage = unfinishedPages.has(post.fields.slug)
+  const heroDescription = isUnfinishedPage ? null : description
 
   return (
     <PageLayout>
@@ -26,10 +30,16 @@ export default function PageTemplate({ pageContext }) {
           icon={icon}
           thumbnail={thumbnail}
         />
-        <div
-          className="page-article"
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
+        {isUnfinishedPage ? (
+          <WorkInProgressNotice>
+            This page is not ready yet. It will be written next.
+          </WorkInProgressNotice>
+        ) : (
+          <div
+            className="page-article"
+            dangerouslySetInnerHTML={{ __html: post.html }}
+          />
+        )}
     </PageLayout>
   )
 }

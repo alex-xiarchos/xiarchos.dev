@@ -3,7 +3,6 @@ export const projectsList = [
     name: 'xiarxos.gr',
     date: '2025',
     slug: 'xiarxos.gr_react',
-    repo: 'xiarxos.gr_react',
     tagline:
       'Responsive personal portfolio built with React, Tailwind CSS, and Vite.',
     url: 'https://xiarxos.gr',
@@ -15,7 +14,6 @@ export const projectsList = [
   {
     name: 'Human Activity Classification & Clustering System',
     slug: 'ceid-DataMining',
-    repo: 'ceid-DataMining',
     tagline:
       'Data mining system for classifying and clustering wearable sensor activity data.',
     source: 'https://github.com/alex-xiarchos/ceid-DataMining',
@@ -27,7 +25,6 @@ export const projectsList = [
   {
     name: 'Semantic Document Search with TF-IDF & ColBERT',
     slug: 'ceid-InfoRetrival',
-    repo: 'ceid-InfoRetrival',
     tagline:
       'Information retrieval system with TF-IDF ranking, inverted indexing, and ColBERT.',
     source: 'https://github.com/alex-xiarchos/ceid-InfoRetrival',
@@ -39,7 +36,6 @@ export const projectsList = [
   {
     name: 'Multi-Dimensional Data Indexing & Search System',
     slug: 'ceid-MultidimensionalDataStructures',
-    repo: 'ceid-MultidimensionalDataStructures',
     tagline:
       'Range Tree, K-D Tree, R-Tree, Quad Tree, and LSH search over structured data.',
     source: 'https://github.com/alex-xiarchos/ceid-MultidimensionalDataStructures',
@@ -63,7 +59,6 @@ export const projectsList = [
   {
     name: 'Disaster Management Web Platform',
     slug: 'ceid-Web',
-    repo: 'ceid-Web',
     tagline:
       'Web platform for citizens and rescuers to coordinate essential item requests, offers, pickups, and deliveries.',
     source: 'https://github.com/alex-xiarchos/ceid-Web/',

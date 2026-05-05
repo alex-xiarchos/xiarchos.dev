@@ -37,8 +37,7 @@ export const Sidebar = () => {
         <h2>About Me</h2>
         <div className="sidebar-content">
           <p>
-            I'm <Link to="/me">Alexandros</Link>, a web developer focused on
-            practical web platforms, data systems, and clean interfaces.
+            I'm <Link to="/me">Alexandros</Link>, a software developer.
           </p>
         </div>
       </section>
@@ -79,6 +78,10 @@ export const Sidebar = () => {
             GitHub
           </a>
         </p>
+      </section>
+
+      <section className="sidebar-section sidebar-disclaimer">
+        <p>This site is still a work in progress.</p>
       </section>
     </aside>
   )

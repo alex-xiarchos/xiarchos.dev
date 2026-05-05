@@ -16,7 +16,6 @@ const links = [
 ]
 
 const socialLinks = [
-  { url: 'https://github.com/alex-xiarchos' },
   { url: 'https://www.linkedin.com/in/alex-xiarchos/' },
   { url: 'mailto:alex@xiarxos.gr' },
 ]
