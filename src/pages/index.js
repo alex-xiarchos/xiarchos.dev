@@ -6,6 +6,7 @@ import { SiteHead } from '../components/SiteHead'
 import { Heading } from '../components/Heading'
 import { Hero } from '../components/Hero'
 import { PageLayout } from '../components/PageLayout'
+import { ProjectCard } from '../components/ProjectCard'
 import { experienceList } from '../data/experienceList'
 import { projectsList } from '../data/projectsList'
 import floppy from '../assets/floppylogo.png'
@@ -85,38 +86,9 @@ export default function Index() {
           <div className="cards">
             {projectsList
               .filter((project) => project.highlight)
-              .map((project) => {
-                return (
-                  <div className="card" key={`hightlight-${project.slug}`}>
-                    <time>{project.date}</time>
-                    <Link to={project.writeup || '/projects'}>
-                      {project.name}
-                    </Link>
-                    <p>{project.tagline}</p>
-                    <div className="card-links">
-                      <a
-                        className="button secondary small"
-                        href={project.url}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {project.urlLabel || 'Demo'}
-                      </a>
-                      <a
-                        className="button secondary small"
-                        href={
-                          project.source ||
-                          `https://github.com/alex-xiarchos/${project.slug}`
-                        }
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Source
-                      </a>
-                    </div>
-                  </div>
-                )
-              })}
+              .map((project) => (
+                <ProjectCard project={project} key={`highlight-${project.slug}`} />
+              ))}
           </div>
         </section>
     </PageLayout>

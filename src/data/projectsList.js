@@ -12,25 +12,24 @@ export const projectsList = [
     highlight: true,
   },
   {
-    name: 'Human Activity Classification & Clustering System',
-    slug: 'ceid-DataMining',
+    name: 'Applied ML and Information Retrieval Pipelines',
+    date: '2026',
+    slug: 'applied-ml-ir-pipelines',
     tagline:
-      'Data mining system for classifying and clustering wearable sensor activity data.',
-    source: 'https://github.com/alex-xiarchos/ceid-DataMining',
-    writeup: '/projects/human-activity-classification-clustering-system',
-    url: '/reports/Project_DataMining_Report.pdf',
-    urlLabel: 'Report',
-    highlight: true,
-  },
-  {
-    name: 'Semantic Document Search with TF-IDF & ColBERT',
-    slug: 'ceid-InfoRetrival',
-    tagline:
-      'Information retrieval system with TF-IDF ranking, inverted indexing, and ColBERT.',
-    source: 'https://github.com/alex-xiarchos/ceid-InfoRetrival',
-    writeup: '/projects/semantic-document-search-tfidf-colbert',
-    url: '/reports/Project_InfoRetrieval_Report.pdf',
-    urlLabel: 'Report',
+      'Unified case study combining wearable-sensor activity recognition with TF-IDF and ColBERT document retrieval.',
+    writeup: '/projects/applied-ml-ir-pipelines',
+    url: '/projects/applied-ml-ir-pipelines/#interactive-demo',
+    urlLabel: 'Demo',
+    sources: [
+      {
+        label: 'HAR Source',
+        url: 'https://github.com/alex-xiarchos/ceid-DataMining',
+      },
+      {
+        label: 'IR Source',
+        url: 'https://github.com/alex-xiarchos/ceid-InfoRetrival',
+      },
+    ],
     highlight: true,
   },
   {

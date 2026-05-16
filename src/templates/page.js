@@ -5,6 +5,7 @@ import { Hero } from '../components/Hero'
 import { SiteHead } from '../components/SiteHead'
 import { PageLayout } from '../components/PageLayout'
 import { WorkInProgressNotice } from '../components/WorkInProgressNotice'
+import { AppliedMlIrDemo } from '../components/AppliedMlIrDemo'
 import floppy from '../assets/nav-floppy.png'
 import projects from '../assets/nav-projects.png'
 
@@ -20,7 +21,9 @@ export default function PageTemplate({ pageContext }) {
   const { title, description, thumbnail } = post.frontmatter
   const icon = pageIcons[post.fields.slug]
   const isUnfinishedPage = unfinishedPages.has(post.fields.slug)
-  const heroDescription = isUnfinishedPage ? null : description
+  const hasAppliedMlIrDemo = post.fields.slug === '/projects/applied-ml-ir-pipelines/'
+  const heroDescription =
+    isUnfinishedPage || hasAppliedMlIrDemo ? null : description
 
   return (
     <PageLayout>
@@ -35,10 +38,13 @@ export default function PageTemplate({ pageContext }) {
             This page is not ready yet. It will be written next.
           </WorkInProgressNotice>
         ) : (
-          <div
-            className="page-article"
-            dangerouslySetInnerHTML={{ __html: post.html }}
-          />
+          <>
+            {hasAppliedMlIrDemo && <AppliedMlIrDemo />}
+            <div
+              className="page-article"
+              dangerouslySetInnerHTML={{ __html: post.html }}
+            />
+          </>
         )}
     </PageLayout>
   )
