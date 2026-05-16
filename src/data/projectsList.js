@@ -2,11 +2,11 @@ export const projectsList = [
   {
     name: 'xiarxos.gr',
     date: '2025',
-    slug: 'xiarxos.gr_react',
+    slug: 'xiarxos.gr',
     tagline:
       'Responsive personal portfolio built with React, Tailwind CSS, and Vite.',
     url: 'https://xiarxos.gr',
-    source: 'https://github.com/alex-xiarchos/xiarxos.gr_react',
+    source: 'https://github.com/alex-xiarchos/xiarxos.gr',
     writeup: '/projects/xiarxos-gr',
     urlLabel: 'Live Site',
     highlight: true,

@@ -19,7 +19,6 @@ export function ProjectCard({ project }) {
 
   return (
     <div className="card">
-      <time>{project.date}</time>
       <Link className="card-header" to={project.writeup || '/projects'}>
         {project.name}
       </Link>

@@ -194,7 +194,7 @@ export function AppliedMlIrDemo() {
   useEffect(() => {
     const chart = chartRef.current
 
-    if (!chart) {
+    if (activeTab !== 'activity' || !chart) {
       return
     }
 
@@ -246,7 +246,7 @@ export function AppliedMlIrDemo() {
     })
 
     ctx.textAlign = 'start'
-  }, [])
+  }, [activeTab])
 
   const handlePresetChange = (event) => {
     setSensorValues(activityPresets[event.target.value])
