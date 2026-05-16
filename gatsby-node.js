@@ -13,13 +13,32 @@ function slugify(str) {
   )
 }
 
+const createSchemaCustomization = ({ actions }) => {
+  const { createTypes } = actions
+
+  createTypes(`
+    type MarkdownRemark implements Node {
+      frontmatter: MarkdownRemarkFrontmatter
+    }
+
+    type MarkdownRemarkFrontmatter {
+      title: String
+      date: Date @dateformat
+      description: String
+      template: String
+      slug: String
+      tags: [String]
+      thumbnail: File @fileByRelativePath
+    }
+  `)
+}
+
 const createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
 
   const blogPage = path.resolve('./src/templates/post.js')
   const pagePage = path.resolve('./src/templates/page.js')
   const tagPage = path.resolve('./src/templates/topic.js')
-  const categoryPage = path.resolve('./src/templates/category.js')
 
   const result = await graphql(
     `
@@ -33,7 +52,6 @@ const createPages = async ({ graphql, actions }) => {
                 title
                 description
                 tags
-                categories
                 template
                 thumbnail {
                   childImageSharp {
@@ -59,7 +77,6 @@ const createPages = async ({ graphql, actions }) => {
   const posts = all.filter((post) => post.node.frontmatter.template === 'post')
   const pages = all.filter((post) => post.node.frontmatter.template === 'page')
   const tagSet = new Set()
-  const categorySet = new Set()
 
   // =====================================================================================
   // Posts
@@ -72,12 +89,6 @@ const createPages = async ({ graphql, actions }) => {
     if (post.node.frontmatter.tags) {
       post.node.frontmatter.tags.forEach((tag) => {
         tagSet.add(tag)
-      })
-    }
-
-    if (post.node.frontmatter.categories) {
-      post.node.frontmatter.categories.forEach((category) => {
-        categorySet.add(category)
       })
     }
 
@@ -121,21 +132,6 @@ const createPages = async ({ graphql, actions }) => {
       },
     })
   })
-
-  // =====================================================================================
-  // Categories
-  // =====================================================================================
-
-  const categoryList = Array.from(categorySet)
-  categoryList.forEach((category) => {
-    createPage({
-      path: `/categories/${slugify(category)}/`,
-      component: categoryPage,
-      context: {
-        category,
-      },
-    })
-  })
 }
 
 const createNode = ({ node, actions, getNode }) => {
@@ -164,5 +160,6 @@ const createNode = ({ node, actions, getNode }) => {
   }
 }
 
+exports.createSchemaCustomization = createSchemaCustomization
 exports.createPages = createPages
 exports.onCreateNode = createNode

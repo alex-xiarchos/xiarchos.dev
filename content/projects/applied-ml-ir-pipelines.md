@@ -4,7 +4,6 @@ date: 2026-05-03
 template: page
 slug: projects/applied-ml-ir-pipelines
 description: Unified project writeup for human activity recognition, clustering, semantic document search, TF-IDF ranking, and ColBERT comparison.
-comments_off: true
 ---
 
 ## Overview

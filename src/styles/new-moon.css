@@ -37,8 +37,8 @@ pre {
 
 code[class*='language-'],
 pre[class*='language-'] {
-  color: var(--font-color);
-  font-family: var(--font-family-monospace);
+  color: var(--color-text);
+  font-family: var(--font-family-monospace), monospace;
   font-size: 14px;
   text-align: left;
   white-space: pre;
@@ -112,7 +112,7 @@ pre.language-text {
   background: var(--color-background-terminal);
   max-width: 100%;
   border: 1px solid var(--color-border-terminal);
-  box-shadow: rgba(0, 0, 0, 0.1) 0px 15px 20px, rgba(0, 0, 0, 0.3) 0px 5px 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0 15px 20px, rgba(0, 0, 0, 0.3) 0 5px 15px;
 }
 
 code.language-terminal {
@@ -205,7 +205,6 @@ pre.language-terminal::after {
   padding: 0.5rem 1rem;
   margin-bottom: -1.5rem;
   border-bottom: 1px solid var(--color-border);
-  font-weight: 500;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow-x: hidden;
@@ -221,7 +220,7 @@ kbd {
   border-radius: var(--border-radius);
   border: 1px solid var(--color-border);
   box-shadow: 0 2px 0 1px var(--color-border);
-  font-family: var(--font-family);
+  font-family: var(--font-family), sans-serif;
   cursor: default;
   font-size: 0.75em;
   line-height: 1;
