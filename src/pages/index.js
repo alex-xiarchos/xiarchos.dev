@@ -46,10 +46,15 @@ export default function Index() {
                   <img src={githubSrc} alt="Projects Logo" /> Projects
                 </Link>
               </p>
-              <section className="callout-card cv-callout" aria-labelledby="cv-title">
+              <section
+                className="card cv-callout flex-space-between flex-align-center flex-wrap gap"
+                aria-labelledby="cv-title"
+              >
                 <div>
-                  <h2 id="cv-title">Curriculum Vitae</h2>
-                  <p>Latest PDF resume</p>
+                  <h2 className="card-title" id="cv-title">
+                    Curriculum Vitae
+                  </h2>
+                  <p className="card-company">Latest PDF resume</p>
                 </div>
                 <a
                   className="button secondary small"
