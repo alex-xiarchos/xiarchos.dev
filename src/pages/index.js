@@ -54,7 +54,6 @@ export default function Index() {
                   <h2 className="card-title" id="cv-title">
                     Curriculum Vitae
                   </h2>
-                  <p className="card-company">Latest PDF resume</p>
                 </div>
                 <a
                   className="button secondary small"
