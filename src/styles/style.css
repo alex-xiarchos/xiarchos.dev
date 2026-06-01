@@ -1169,17 +1169,17 @@ a.navbar-icon {
 }
 
 .cv-callout {
-  max-width: 460px;
+  max-width: 360px;
   margin-top: 1.25rem;
-  padding: 0.6rem 0.75rem;
+  padding: 0.55rem 0.65rem;
 
   .card-title {
-    font-size: 1rem;
+    font-size: 0.95rem;
     margin: 0 0 0.1rem;
   }
 
   .card-company {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     margin: 0;
   }
 }
