@@ -46,6 +46,20 @@ export default function Index() {
                   <img src={githubSrc} alt="Projects Logo" /> Projects
                 </Link>
               </p>
+              <section className="cv-callout" aria-labelledby="cv-title">
+                <div>
+                  <h2 id="cv-title">Curriculum Vitae</h2>
+                  <p>Full PDF resume with experience, projects, and education.</p>
+                </div>
+                <a
+                  className="button secondary small"
+                  href="/cv.pdf"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Open PDF
+                </a>
+              </section>
             </div>
             <div className="hero-image-container">
               <img src="/hero.png" className="hero-image" alt="Alexandros" />
