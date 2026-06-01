@@ -4,7 +4,6 @@ export function getSimplifiedPosts(posts, options = {}) {
     date: post.node.frontmatter.date,
     slug: post.node.fields.slug,
     tags: post.node.frontmatter.tags,
-    categories: post.node.frontmatter.categories,
     title: post.node.frontmatter.title,
     description: post.node.frontmatter.description,
     ...(options.thumbnails && {
@@ -12,14 +11,6 @@ export function getSimplifiedPosts(posts, options = {}) {
         post.node.frontmatter?.thumbnail?.childImageSharp?.gatsbyImageData,
     }),
   }))
-}
-
-export function getTaxonomyFromPosts(posts, taxonomy) {
-  return posts
-    .reduce((acc, post) => {
-      return [...new Set([...acc, ...(post[taxonomy] || [])])]
-    }, [])
-    .sort()
 }
 
 export function slugify(string) {
@@ -36,29 +27,6 @@ export function slugify(string) {
 
 export function capitalize(string) {
   return string.charAt(0).toUpperCase() + string.slice(1)
-}
-
-export function appendComments() {
-  const commentDiv = document.getElementById('append-comments-here')
-  const commentScript = document.createElement('script')
-  const theme = window.localStorage.getItem('theme')
-
-  commentScript.async = true
-  commentScript.src = 'https://utteranc.es/client.js'
-  commentScript.setAttribute('repo', 'alex-xiarchos/xiarxos.gr')
-  commentScript.setAttribute('issue-term', 'pathname')
-  commentScript.setAttribute('id', 'utterances')
-  commentScript.setAttribute(
-    'theme',
-    theme === 'light' ? 'github-light' : 'github-dark'
-  )
-  commentScript.setAttribute('crossorigin', 'anonymous')
-
-  if (!commentDiv.firstChild) {
-    commentDiv.appendChild(commentScript)
-  } else {
-    console.error('Error adding utterances comments')
-  }
 }
 
 export function getFormattedDate(date, option = 2) {

@@ -14,7 +14,7 @@ export default function Blog({ data }) {
   const simplifiedPosts = useMemo(() => getSimplifiedPosts(posts), [posts])
   const title = 'Blog'
   const descriptionText =
-    'Guides, references, and tutorials on programming, web development, and design.'
+    'Articles, references, and tutorials on programming, web development, design, and projects.'
 
   const description = (
     <div>
@@ -37,7 +37,7 @@ Blog.Layout = Layout
 export const Head = () => (
   <SiteHead
     title="Blog"
-    description="Guides, references, and tutorials on programming, web development, and design."
+    description="Articles, references, and tutorials on programming, web development, design, and projects."
   />
 )
 
@@ -45,12 +45,7 @@ export const articlesQuery = graphql`
   query BlogQuery {
     posts: allMarkdownRemark(
       sort: { frontmatter: { date: DESC } }
-      filter: {
-        frontmatter: {
-          template: { eq: "post" }
-          categories: { eq: "Technical" }
-        }
-      }
+      filter: { frontmatter: { template: { eq: "post" } } }
     ) {
       edges {
         node {

@@ -13,6 +13,10 @@ import floppy from '../assets/floppylogo.png'
 import projects from '../assets/nav-projects.png'
 import github from '../assets/nav-github.png'
 
+const floppySrc = String(floppy)
+const projectsSrc = String(projects)
+const githubSrc = String(github)
+
 export default function Index() {
   return (
     <PageLayout>
@@ -33,13 +37,13 @@ export default function Index() {
                 style={{ marginBottom: 0 }}
               >
                 <Link className="button" to="/me">
-                  <img src={floppy} alt="Floppy Logo" /> About Me
+                  <img src={floppySrc} alt="Floppy Logo" /> About Me
                 </Link>
                 <Link className="button" to="/experience">
-                  <img src={projects} alt="Projects Logo" /> Experience
+                  <img src={projectsSrc} alt="Projects Logo" /> Experience
                 </Link>
                 <Link className="button" to="/projects">
-                  <img src={github} alt="Projects Logo" /> Projects
+                  <img src={githubSrc} alt="Projects Logo" /> Projects
                 </Link>
               </p>
             </div>
@@ -55,7 +59,7 @@ export default function Index() {
             slug="/experience"
             buttonText="All Experience"
             description="Web development and teaching assistant experience."
-            icon={projects}
+            icon={projectsSrc}
           />
           <div className="cards">
             {experienceList.map((experience) => {
@@ -80,7 +84,7 @@ export default function Index() {
             slug="/projects"
             buttonText="All Projects"
             description="Web, data, information retrieval, and low-code projects."
-            icon={github}
+            icon={githubSrc}
           />
 
           <div className="cards">

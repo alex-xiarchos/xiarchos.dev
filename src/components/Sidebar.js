@@ -4,15 +4,19 @@ import { Link } from 'gatsby'
 import floppyLogo from '../assets/nav-floppy.png'
 import floppy from '../assets/floppylogo.png'
 import projects from '../assets/nav-projects.png'
+import blog from '../assets/nav-blog.png'
 import github from '../assets/nav-github.png'
 
-export const Sidebar = () => {
-  const links = [
-    { url: '/projects', label: 'Projects', image: github },
-    { url: '/experience', label: 'Experience', image: projects },
-    { url: '/me', label: 'About Me', image: floppy },
-  ]
+const floppyLogoSrc = String(floppyLogo)
+const blogSrc = String(blog)
+const links = [
+  { url: '/projects', label: 'Projects', image: String(github) },
+  { url: '/experience', label: 'Experience', image: String(projects) },
+  { url: '/me', label: 'About Me', image: String(floppy) },
+  { url: '/blog', label: 'Blog', image: blogSrc },
+]
 
+export const Sidebar = () => {
   return (
     <aside className="sidebar">
       <section className="sidebar-section">
@@ -20,7 +24,7 @@ export const Sidebar = () => {
           <Link to="/" className="sidebar-home-link">
             <span>
               <img
-                src={floppyLogo}
+                src={floppyLogoSrc}
                 className="navbar-logo"
                 alt="xiarxos.gr"
                 title="💾"

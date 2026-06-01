@@ -5,14 +5,19 @@ import { SocialIcon } from 'react-social-icons'
 import floppy from '../assets/floppylogo.png'
 import floppyLogo from '../assets/nav-floppy.png'
 import projects from '../assets/nav-projects.png'
+import blog from '../assets/nav-blog.png'
 import github from '../assets/nav-github.png'
 import { Menu } from '../assets/Menu'
 import { Close } from '../assets/Close'
 
+const floppyLogoSrc = String(floppyLogo)
+const blogSrc = String(blog)
+
 const links = [
-  { url: '/projects', label: 'Projects', image: github },
-  { url: '/experience', label: 'Experience', image: projects },
-  { url: '/me', label: 'About Me', image: floppy },
+  { url: '/projects', label: 'Projects', image: String(github) },
+  { url: '/experience', label: 'Experience', image: String(projects) },
+  { url: '/me', label: 'About Me', image: String(floppy) },
+  { url: '/blog', label: 'Blog', image: blogSrc },
 ]
 
 const socialLinks = [
@@ -38,7 +43,7 @@ export const Navigation = () => {
           <Link to="/" className="navbar-title-link">
             <span>
               <img
-                src={floppyLogo}
+                src={floppyLogoSrc}
                 className="navbar-logo"
                 alt="xiarxos.gr"
                 title="💾"

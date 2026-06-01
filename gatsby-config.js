@@ -196,7 +196,6 @@ module.exports = {
             title: node.frontmatter.title,
             body: node.rawMarkdownBody,
             tags: node.frontmatter.tags,
-            categories: node.frontmatter.categories,
             date: node.frontmatter.date,
           })),
       },

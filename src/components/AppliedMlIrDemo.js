@@ -34,6 +34,27 @@ const activityPresets = {
   standing: { back: 12, thigh: 14, stability: 88 },
 }
 
+const activityRules = [
+  {
+    label: 'Standing',
+    matches: ({ back, thigh, stability }) =>
+      stability > 72 && back < 34 && thigh < 36,
+  },
+  {
+    label: 'Running',
+    matches: ({ back, thigh, stability }) =>
+      back > 72 && thigh > 72 && stability < 38,
+  },
+  {
+    label: 'Cycling',
+    matches: ({ back, thigh }) => thigh - back > 32 && thigh > 58,
+  },
+]
+
+const chartPadding = { top: 28, right: 24, bottom: 48, left: 54 }
+const chartMetrics = ['accuracy', 'precision', 'recall', 'f1']
+const chartFont = '13px system-ui, sans-serif'
+
 const documents = [
   {
     id: '00001',
@@ -115,19 +136,70 @@ function tokenize(text) {
 }
 
 function classifyActivity({ back, thigh, stability }) {
-  if (stability > 72 && back < 34 && thigh < 36) {
-    return 'Standing'
-  }
+  const matchedRule = activityRules.find((rule) =>
+    rule.matches({ back, thigh, stability })
+  )
 
-  if (back > 72 && thigh > 72 && stability < 38) {
-    return 'Running'
-  }
+  return matchedRule ? matchedRule.label : 'Walking'
+}
 
-  if (thigh - back > 32 && thigh > 58) {
-    return 'Cycling'
-  }
+function drawChartGrid(ctx, width, height) {
+  ctx.strokeStyle = '#d8dfda'
+  ctx.lineWidth = 1
+  ctx.font = chartFont
+  ctx.fillStyle = '#5f6f6b'
+  ctx.textAlign = 'start'
 
-  return 'Walking'
+  for (let tick = 0; tick <= 1; tick += 0.25) {
+    const y =
+      height -
+      chartPadding.bottom -
+      tick * (height - chartPadding.top - chartPadding.bottom)
+
+    ctx.beginPath()
+    ctx.moveTo(chartPadding.left, y)
+    ctx.lineTo(width - chartPadding.right, y)
+    ctx.stroke()
+    ctx.fillText(tick.toFixed(2), 12, y + 4)
+  }
+}
+
+function drawMetricBars(ctx, width, height) {
+  const groupWidth =
+    (width - chartPadding.left - chartPadding.right) / chartMetrics.length
+  const barWidth = 28
+  const chartHeight = height - chartPadding.top - chartPadding.bottom
+
+  chartMetrics.forEach((metric, groupIndex) => {
+    const groupX =
+      chartPadding.left + groupIndex * groupWidth + groupWidth / 2
+
+    classifierMetrics.forEach((model, modelIndex) => {
+      const barHeight = model[metric] * chartHeight
+      const x = groupX + (modelIndex - 1) * (barWidth + 8) - barWidth / 2
+      const y = height - chartPadding.bottom - barHeight
+
+      ctx.fillStyle = model.color
+      ctx.fillRect(x, y, barWidth, barHeight)
+    })
+
+    ctx.fillStyle = '#17211f'
+    ctx.textAlign = 'center'
+    ctx.fillText(metric.toUpperCase(), groupX, height - 18)
+  })
+}
+
+function drawClassifierMetricChart(chart) {
+  const ctx = chart.getContext('2d')
+  const { width, height } = chart
+
+  ctx.clearRect(0, 0, width, height)
+  ctx.fillStyle = '#ffffff'
+  ctx.fillRect(0, 0, width, height)
+
+  drawChartGrid(ctx, width, height)
+  drawMetricBars(ctx, width, height)
+  ctx.textAlign = 'start'
 }
 
 function rankDocuments(query) {
@@ -198,54 +270,7 @@ export function AppliedMlIrDemo() {
       return
     }
 
-    const ctx = chart.getContext('2d')
-    const width = chart.width
-    const height = chart.height
-    const padding = { top: 28, right: 24, bottom: 48, left: 54 }
-    const metrics = ['accuracy', 'precision', 'recall', 'f1']
-    const groupWidth = (width - padding.left - padding.right) / metrics.length
-    const barWidth = 28
-
-    ctx.clearRect(0, 0, width, height)
-    ctx.fillStyle = '#ffffff'
-    ctx.fillRect(0, 0, width, height)
-    ctx.strokeStyle = '#d8dfda'
-    ctx.lineWidth = 1
-    ctx.font = '13px system-ui, sans-serif'
-    ctx.fillStyle = '#5f6f6b'
-
-    for (let tick = 0; tick <= 1; tick += 0.25) {
-      const y =
-        height -
-        padding.bottom -
-        tick * (height - padding.top - padding.bottom)
-
-      ctx.beginPath()
-      ctx.moveTo(padding.left, y)
-      ctx.lineTo(width - padding.right, y)
-      ctx.stroke()
-      ctx.fillText(tick.toFixed(2), 12, y + 4)
-    }
-
-    metrics.forEach((metric, groupIndex) => {
-      const groupX = padding.left + groupIndex * groupWidth + groupWidth / 2
-
-      classifierMetrics.forEach((model, modelIndex) => {
-        const value = model[metric]
-        const barHeight = value * (height - padding.top - padding.bottom)
-        const x = groupX + (modelIndex - 1) * (barWidth + 8) - barWidth / 2
-        const y = height - padding.bottom - barHeight
-
-        ctx.fillStyle = model.color
-        ctx.fillRect(x, y, barWidth, barHeight)
-      })
-
-      ctx.fillStyle = '#17211f'
-      ctx.textAlign = 'center'
-      ctx.fillText(metric.toUpperCase(), groupX, height - 18)
-    })
-
-    ctx.textAlign = 'start'
+    drawClassifierMetricChart(chart)
   }, [activeTab])
 
   const handlePresetChange = (event) => {
