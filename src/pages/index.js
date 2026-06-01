@@ -49,11 +49,11 @@ export default function Index() {
               <section className="cv-callout" aria-labelledby="cv-title">
                 <div>
                   <h2 id="cv-title">Curriculum Vitae</h2>
-                  <p>Full PDF resume with experience, projects, and education.</p>
+                  <p>Latest PDF resume</p>
                 </div>
                 <a
                   className="button secondary small"
-                  href="/cv.pdf"
+                  href="/Alexandros_Xiarchos_CV.pdf"
                   target="_blank"
                   rel="noreferrer"
                 >
