@@ -11,10 +11,9 @@ import { slugify } from '../utils/helpers'
 export default function PostTemplate({ data }) {
   const post = data.markdownRemark
   const { title, date, thumbnail, tags } = post.frontmatter
-  const isNote = post.frontmatter.categories?.includes('Personal')
 
   return (
-    <PostLayout post={post} isNote={isNote}>
+    <PostLayout post={post}>
         {thumbnail && (
           <GatsbyImage
             image={thumbnail?.childImageSharp?.gatsbyImageData}
@@ -86,7 +85,6 @@ export const pageQuery = graphql`
         title
         date(formatString: "MMMM DD, YYYY")
         tags
-        categories
         description
         thumbnail {
           childImageSharp {

@@ -7,7 +7,7 @@ import { Search } from '../components/Search'
 import { SiteHead } from '../components/SiteHead'
 import { PageLayout } from '../components/PageLayout'
 import { getSimplifiedPosts } from '../utils/helpers'
-import projects from '../assets/nav-projects.png'
+import blogIcon from '../assets/nav-blog.png'
 
 export default function Blog({ data }) {
   const posts = data.posts.edges
@@ -25,7 +25,7 @@ export default function Blog({ data }) {
 
   return (
     <PageLayout>
-      <Hero title={title} description={description} hasSearch icon={projects} />
+      <Hero title={title} description={description} hasSearch icon={blogIcon} />
 
       <Search data={simplifiedPosts} section="blog" />
     </PageLayout>

@@ -10,10 +10,10 @@ import github from '../assets/nav-github.png'
 const floppyLogoSrc = String(floppyLogo)
 const blogSrc = String(blog)
 const links = [
+  { url: '/blog', label: 'Blog', image: blogSrc },
   { url: '/projects', label: 'Projects', image: String(github) },
   { url: '/experience', label: 'Experience', image: String(projects) },
   { url: '/me', label: 'About Me', image: String(floppy) },
-  { url: '/blog', label: 'Blog', image: blogSrc },
 ]
 
 export const Sidebar = () => {

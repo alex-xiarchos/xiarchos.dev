@@ -6,8 +6,6 @@ slug: welcome
 description: A short introduction to this site and what you can expect to find here.
 tags:
   - Website
-  - Projects
-  - Notes
 ---
 
 Welcome to my personal site.
