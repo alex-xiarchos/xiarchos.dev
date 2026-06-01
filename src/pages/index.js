@@ -46,7 +46,7 @@ export default function Index() {
                   <img src={githubSrc} alt="Projects Logo" /> Projects
                 </Link>
               </p>
-              <section className="cv-callout" aria-labelledby="cv-title">
+              <section className="callout-card cv-callout" aria-labelledby="cv-title">
                 <div>
                   <h2 id="cv-title">Curriculum Vitae</h2>
                   <p>Latest PDF resume</p>

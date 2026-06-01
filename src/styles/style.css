@@ -1168,17 +1168,15 @@ a.navbar-icon {
   }
 }
 
-.cv-callout {
+.callout-card {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 0.75rem 1rem;
-  max-width: 600px;
-  margin-top: 1rem;
   padding: 0.85rem 1rem;
   background: var(--color-background-alternate);
-  border: 1px solid var(--color-border-card);
+  border: 2px solid var(--color-border-card);
   border-left: 4px solid var(--color-primary);
   border-radius: var(--border-radius);
 
@@ -1193,6 +1191,11 @@ a.navbar-icon {
     color: var(--color-text-muted);
     font-size: 0.95rem;
   }
+}
+
+.cv-callout {
+  max-width: 540px;
+  margin-top: 1.25rem;
 }
 
 .hero-image {
