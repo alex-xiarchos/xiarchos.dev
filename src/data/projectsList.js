@@ -12,6 +12,20 @@ export const projectsList = [
     highlight: true,
   },
   {
+    name: 'Greek & Latin Bold Unicode Converter',
+    date: '2026',
+    slug: 'greek-latin-bold-unicode-converter',
+    tagline:
+      'Browser-based converter for Greek, Latin, and numeric text into bold mathematical Unicode characters.',
+    writeup: '/projects/greek-latin-bold-unicode-converter',
+    url: '/demos/greek-latin-bold-unicode-converter/',
+    urlLabel: 'Demo',
+    source:
+      'https://github.com/alex-xiarchos/xiarxos.gr/blob/main/src/components/GreekLatinBoldUnicodeConverterDemo.js',
+    sourceLabel: 'Code',
+    highlight: true,
+  },
+  {
     name: 'Applied ML and Information Retrieval Pipelines',
     date: '2026',
     slug: 'applied-ml-ir-pipelines',
